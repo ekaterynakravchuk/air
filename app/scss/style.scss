@@ -28,12 +28,45 @@
         display: flex;
         align-items: center;
     }
+    &__burger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        & span {
+            width: 30px;
+            height: 4px;
+            background-color: $accent;
+            border-radius: 2px;
+            margin: 2px 0;
+        }
+    }
     &__menu-list {
         display: flex;
         align-items: center;
     }
     &__menu-item {
         margin-left: 20px;
+    }
+    &__menu-item.active {
+        position: relative;
+        &::before {
+            position: absolute;
+            content: '';
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background-color: #fff;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            z-index: -1;
+        }
     }
     &__menu-link,
     &__reg-link {
@@ -60,6 +93,15 @@
         &:hover {
             background-color: #464377;
         }
+    }
+}
+.fixed {
+    position: fixed;
+    background-color: #DCF0F6;
+    padding: 10px 0;
+    box-shadow: 0px 30px 84px rgba(19, 10, 46, 0.08), 0px 8px 32px rgba(19, 10, 46, 0.07), 0px 3px 14px rgba(19, 10, 46, 0.03), 0px 1px 3px rgba(19, 10, 46, 0.13);
+    & .header__inner {
+        padding: 0;
     }
 }
 
@@ -104,17 +146,188 @@
             top: 50%;
             transform: translateY(-50%);
             right: 0;
+            transition: all .3s;
+        }
+        &:hover.top__link::after {
+            right: -10px;
         }
     }
     &__form {
-        width: 1110px;
-        height: 266px;
+        max-width: 1110px;
+        padding: 34px 29px;
         background-color: #fff;
         box-shadow: 0px 30px 84px rgba(19, 10, 46, 0.08), 0px 8px 32px rgba(19, 10, 46, 0.07), 0px 3px 14px rgba(19, 10, 46, 0.03), 0px 1px 3px rgba(19, 10, 46, 0.13);
         border-radius: 12px;
         position: absolute;
         bottom: -150px;
+    }
+    &__dropdowns {
+        display: flex;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 24px;
+    }
+    &__dropdown {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin-right: 10px;
+        position: relative;
+        &:last-child {
+            width: 105px;
+        }
+    }
+    &__hidden-input {
+        max-width: 100px;
+        display: none;
+    }
+    &__dropdown-btn {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        padding-right: 25px;
+        cursor: pointer;
+        position: relative;
+        &::after {
+            position: absolute;
+            content: '';
+            width: 8px;
+            height: 5px;
+            background-image: url(../images/dropdown-arrow.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 7px;
+        }
+    }
+    &__dropdown-list {
+        display: none;
+        width: 100%;
+        border-radius: 3px;
+        overflow: hidden;
         position: absolute;
+        z-index: 3;
+        top: 21px;
+        left: 0;
+        padding: 10px 5px;
+        background-color: #fff;
+        &.open {
+            display: block;
+        }
+    }
+    &__dropdown-item {
+        margin: 8px 0;
+        transition: all .3s;
+        cursor: pointer;
+        &:hover {
+            color: $accent;
+        }
+    }
+    &__form-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+    &__form-box {
+        padding: 15px 20px;
+        border: 1px solid #AAAAAA;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        &.date {
+            flex-direction: row;
+            justify-content: center;
+            margin-left: auto;
+        }
+        &:last-child {
+            margin-left: 30px;
+        }
+    }
+    &__form-box:first-child {
+        margin-right: 40px;
+        position: relative;
+        &::after {
+            position: absolute;
+            content: '';
+            width: 28px;
+            height: 28px;
+            border: 0.466667px solid #AAAAAA;
+            border-radius: 50%;
+            background-image: url(../images/arrows-left-right.svg);
+            background-repeat: no-repeat;
+            background-size: 16px 16px;
+            background-position: 50% 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -34px;
+        }
+    }
+    &__form-subtext {
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 500;
+        color: $grey;
+    }
+    &__form-input {
+        margin: 5px 0;
+        border: none;
+        font-size: 24px;
+        font-weight: 600;
+        color: $main-black;
+        cursor: pointer;
+        max-width: 250px;
+        &::placeholder {
+            font-size: 24px;
+            font-weight: 600;
+            color: $main-black;
+        }
+    }
+    &__date {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        max-width: 156px;
+        &:first-child {
+            margin-right: 40px;
+        }
+    }
+    &__date .top__form-input {
+        max-width: 155px;
+        padding-right: 30px;
+        background-image: url(../images/calendar-icon.svg);
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-position: right;
+    }
+    &__date-btns {
+        display: flex;
+        align-items: center;
+    }
+    &__date-btn {
+        border: none;
+        background-color: transparent;
+        padding: 0;
+        font-size: 14px;
+        font-weight: 500;
+        color: $grey;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+        &:first-child {
+            margin-right: 44px;
+        }
+    }
+    &__form-link {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: $main-black;
+        text-decoration: underline;
     }
     &__form-btn {
         font-size: 18px;
@@ -197,8 +410,10 @@
         margin-right: 38px;
         border-radius: 20px;
         overflow: hidden;
+        align-self: stretch;
         & img {
             width: 100%;
+            height: 100%;
             object-fit: cover
         }
     }
@@ -360,12 +575,12 @@
     }
     &__col:hover {
         background-color: #fff;
-        transform: translateY(-40px);
         .membership__card {
             max-width: 384px;
             margin: 0 auto;
             color: #fff;
             background-color: $accent;
+            transform: translateY(-40px);
         }
         .membership__card-item::before {
             background-image: url(../images/check-circle-wht.svg);
@@ -385,6 +600,7 @@
         max-width: 400px;
         border-radius: 20px;
         transition: all .3s;
+        margin: 0 auto;
     }
     &__card-title {
         font-size: 32px;
